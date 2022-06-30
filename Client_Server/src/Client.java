@@ -1,54 +1,50 @@
 import java.net.*;
 import java.io.*;
 
+
+
 public class Client {
+
     public static void main(String[] args)
     {
+        System.out.println("************************************");
+        System.out.println("HELLO.. THIS IS CLIENT...");
+        System.out.println("************************************");
+        System.out.println(" ");
+
         try {
-            String pstr, gstr, Astr;
             String serverName = "localhost";
             int port = 8088;
 
-            // Declare p, g, and Key of client
-            int p = 23;
-            int g = 9;
+            int p = 53;
+            int g = 12;
             int a = 4;
-            double Adash, serverB;
+            double secKey, serverB;
 
-            // Established the connection
-            System.out.println("Connecting to " + serverName
-                    + " on port " + port);
+            System.out.println("Connecting to " + serverName + " on port " + port);
             Socket client = new Socket(serverName, port);
-            System.out.println("Just connected to "
-                    + client.getRemoteSocketAddress());
+            System.out.println("Just connected to "+ client.getRemoteSocketAddress());
 
-            // Sends the data to client
             OutputStream outToServer = client.getOutputStream();
             DataOutputStream out = new DataOutputStream(outToServer);
 
-            pstr = Integer.toString(p);
-            out.writeUTF(pstr); // Sending p
+            out.writeUTF(Integer.toString(p));
 
-            gstr = Integer.toString(g);
-            out.writeUTF(gstr); // Sending g
+            out.writeUTF(Integer.toString(g));
 
-            double A = ((Math.pow(g, a)) % p); // calculation of A
-            Astr = Double.toString(A);
-            out.writeUTF(Astr); // Sending A
+            double A = ((Math.pow(g, a)) % p);
+            out.writeUTF(Double.toString(A));
 
-            // Client's Private Key
             System.out.println("From Client : Private Key = " + a);
 
-            // Accepts the data
             DataInputStream in = new DataInputStream(client.getInputStream());
 
             serverB = Double.parseDouble(in.readUTF());
             System.out.println("From Server : Public Key = " + serverB);
 
-            Adash = ((Math.pow(serverB, a)) % p); // calculation of Adash
+            secKey = ((Math.pow(serverB, a)) % p);
 
-            System.out.println("Secret Key to perform Symmetric Encryption = "
-                    + Adash);
+            System.out.println("Secret Key to perform Symmetric Encryption = "+ secKey);
             client.close();
         }
         catch (Exception e) {
