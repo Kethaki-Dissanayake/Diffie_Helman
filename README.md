@@ -2,7 +2,7 @@
  Key Exchanging Protocol for exchanging a generated symmetric Key between Two Parties
  
  Information Security
- Assignment 02
+ Assignment - 02
  
  Subasinghe S.M.A.T.  EG/2017/3052
  
